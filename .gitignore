@@ -200,3 +200,18 @@ documents/*
 # Intake fingerprints — the recorded source filenames may themselves carry
 # PII (e.g. cv/jane-doe-master-cv.pdf). #1723
 data/intake-state.json
+
+
+# Personal Google Sheet dashboard (docs/PERSONAL_GOOGLE_SHEET_DASHBOARD.md):
+# OAuth client files and any token/credential dumps must never be committed.
+# The refresh token itself lives in the macOS Keychain; the snapshot and the
+# sheet ID live under data/, which is ignored above.
+client.json
+client*.json
+*client_secret*.json
+*client-secret*.json
+token.json
+*token*.json
+*.token
+*credentials*.json
+*.xlsx

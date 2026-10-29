@@ -2,10 +2,16 @@ import { pipelineSummary, doctorState } from "@/lib/career-ops";
 import { OnboardingBanner } from "@/components/onboarding-banner";
 import { FirstRunHome } from "@/components/home/first-run-home";
 import { TodayDashboard } from "@/components/home/today-dashboard";
+import { loadPersonalDashboard } from "@/lib/personal-dashboard";
+import { PersonalHome } from "@/components/personal/personal-home";
 
 export const dynamic = "force-dynamic"; // always read fresh local files at request time (never at build — CI has no user data)
 
 export default function Home() {
+  // Personal Google-Sheet snapshot (data/personal-dashboard.json) wins when present.
+  const personal = loadPersonalDashboard();
+  if (personal) return <PersonalHome dashboard={personal} />;
+
   const { phase, onboardingNeeded } = doctorState();
   // First run (truly empty install): the CV-upload takeover IS the home — value
   // before commitment. The full dashboard returns once they have a CV or any data.

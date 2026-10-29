@@ -8,6 +8,12 @@ const nextConfig = {
   // Allow a throwaway build dir (e.g. BUILD_DIST=.next-prod) so a production
   // `next build` can run without clobbering a live `next dev` .next.
   ...(process.env.BUILD_DIST ? { distDir: process.env.BUILD_DIST } : {}),
+  // Let `next dev` serve its client assets to the hosts already trusted by the
+  // API guard (CAREER_OPS_WEB_ALLOWED_HOSTS, e.g. a Tailscale address).
+  allowedDevOrigins: (process.env.CAREER_OPS_WEB_ALLOWED_HOSTS ?? "")
+    .split(/[\s,]+/)
+    .map((entry) => entry.trim().replace(/:\d+$/, ""))
+    .filter(Boolean),
 };
 
 export default nextConfig;
